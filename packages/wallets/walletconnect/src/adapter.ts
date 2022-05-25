@@ -17,7 +17,14 @@ import { PublicKey, Transaction } from '@solana/web3.js';
 import WalletConnectClient, { CLIENT_EVENTS } from '@walletconnect/client';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { ClientOptions, ClientTypes, PairingTypes, SessionTypes } from '@walletconnect/types';
-import { serialiseTransaction } from 'solana-wallet';
+import {
+    deserialiseTransaction,
+    deserializeAllTransactions,
+    serialiseTransaction,
+    serializeAllTransactions,
+    SolanaSignAllTransactions,
+    SolanaSignTransaction,
+} from 'solana-wallet';
 import base58 from 'bs58';
 import { ERROR } from '@walletconnect/utils';
 
@@ -28,6 +35,7 @@ export enum WalletConnectChainID {
 
 export enum WalletConnectRPCMethod {
     signTransaction = 'solana_signTransaction',
+    signAllTransactions = 'solana_signAllTransactions',
     signMessage = 'solana_signMessage',
 }
 
@@ -192,7 +200,7 @@ export class WalletConnectWalletAdapter extends BaseSignerWalletAdapter {
         this.emit('disconnect');
     }
 
-    private async signTx(transaction: Transaction): Promise<Transaction> {
+    async signTransaction(transaction: Transaction): Promise<Transaction> {
         try {
             const client = this._client;
             const publicKey = this._publicKey;
@@ -200,36 +208,46 @@ export class WalletConnectWalletAdapter extends BaseSignerWalletAdapter {
             if (!client || !publicKey || !session) throw new WalletNotConnectedError();
 
             try {
-                const { signature } = await client.request({
+                const signedTransaction: SolanaSignTransaction = await client.request({
                     topic: session.topic,
                     request: {
                         method: WalletConnectRPCMethod.signTransaction,
                         params: serialiseTransaction(transaction),
                     },
                 });
-
-                transaction.addSignature(publicKey, base58.decode(signature));
+                return deserialiseTransaction(signedTransaction);
             } catch (error: any) {
                 throw new WalletSignTransactionError(error?.message, error);
             }
-
-            return transaction;
         } catch (error: any) {
             this.emit('error', error);
             throw error;
         }
     }
 
-    async signTransaction(transaction: Transaction): Promise<Transaction> {
-        return this.signTx(transaction);
-    }
-
     async signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
-        const signed: Transaction[] = [];
-        for (const transaction of transactions) {
-            signed.push(await this.signTx(transaction));
+        try {
+            const client = this._client;
+            const publicKey = this._publicKey;
+            const session = this._session;
+            if (!client || !publicKey || !session) throw new WalletNotConnectedError();
+
+            try {
+                const signedTransaction: SolanaSignAllTransactions = await client.request({
+                    topic: session.topic,
+                    request: {
+                        method: WalletConnectRPCMethod.signAllTransactions,
+                        params: serializeAllTransactions(transactions),
+                    },
+                });
+                return deserializeAllTransactions(signedTransaction);
+            } catch (error: any) {
+                throw new WalletSignTransactionError(error?.message, error);
+            }
+        } catch (error: any) {
+            this.emit('error', error);
+            throw error;
         }
-        return signed;
     }
 
     async signMessage(message: Uint8Array): Promise<Uint8Array> {
