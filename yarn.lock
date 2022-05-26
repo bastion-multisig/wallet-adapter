@@ -13970,10 +13970,18 @@ socks@^2.3.3, socks@^2.6.1:
     ip "^1.1.5"
     smart-buffer "^4.2.0"
 
-solana-wallet@^1.0.1:
+solana-wallet@./solana-wallet-v1.0.1.tgz:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/solana-wallet/-/solana-wallet-1.0.1.tgz#4e1bfebbb99640105ed42abd1445baab4f6e0b57"
-  integrity sha512-rkYu9gwayAdVMhWGdZSz6a+IaOJXs3TNtYXWuSQsdMJUndkQ+puy7cB9/u5pwZTjqzxtd1DN9cbAFKFH5648xQ==
+  resolved "./solana-wallet-v1.0.1.tgz#fd7dcc4a5ed8919b22bb711260a9a8b68ec849da"
+  dependencies:
+    "@solana/web3.js" "^1.35.1"
+    bs58 "^5.0.0"
+    tweetnacl "^1.0.3"
+
+"solana-wallet@file:./solana-wallet-v1.0.1.tgz":
+  version "1.0.1"
+  uid fd7dcc4a5ed8919b22bb711260a9a8b68ec849da
+  resolved "file:./solana-wallet-v1.0.1.tgz#fd7dcc4a5ed8919b22bb711260a9a8b68ec849da"
   dependencies:
     "@solana/web3.js" "^1.35.1"
     bs58 "^5.0.0"
