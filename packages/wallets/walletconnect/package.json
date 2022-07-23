@@ -1,6 +1,6 @@
 {
     "name": "@bastion-multisig/wallet-adapter",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "author": "Solana Maintainers <maintainers@solana.foundation>",
     "repository": "https://github.com/solana-labs/wallet-adapter",
     "license": "Apache-2.0",
@@ -32,13 +32,13 @@
     "dependencies": {
         "@bastion-multisig/solana-wallet": "^2.0.3",
         "@solana/wallet-adapter-base": "^0.9.4",
-        "@walletconnect/client": "^2.0.0-beta.26",
+        "@walletconnect/client": "2.0.0-beta.26",
         "@walletconnect/qrcode-modal": "2.0.0-alpha.20",
-        "@walletconnect/utils": "^2.0.0-beta.26"
+        "@walletconnect/utils": "2.0.0-beta.26"
     },
     "devDependencies": {
         "@solana/web3.js": "^1.36.0",
         "@types/pino": "^6.3.11",
-        "@walletconnect/types": "^2.0.0-beta.26"
+        "@walletconnect/types": "2.0.0-beta.26"
     }
 }
