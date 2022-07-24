@@ -70,7 +70,13 @@ export class WalletConnectWalletAdapter extends BaseSignerWalletAdapter {
         this._params = config.params || {
             permissions: {
                 blockchain: { chains: [WalletConnectChainID.Mainnet, WalletConnectChainID.Devnet] },
-                jsonrpc: { methods: [WalletConnectRPCMethod.signTransaction, WalletConnectRPCMethod.signMessage] },
+                jsonrpc: {
+                    methods: [
+                        WalletConnectRPCMethod.signTransaction,
+                        WalletConnectRPCMethod.signAllTransactions,
+                        WalletConnectRPCMethod.signMessage,
+                    ],
+                },
             },
         };
     }
