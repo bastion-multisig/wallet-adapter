@@ -1,6 +1,6 @@
 {
     "name": "@bastion-multisig/wallet-adapter",
-    "version": "0.2.7",
+    "version": "0.2.8",
     "author": "Solana Maintainers <maintainers@solana.foundation>",
     "repository": "https://github.com/solana-labs/wallet-adapter",
     "license": "Apache-2.0",
@@ -30,7 +30,7 @@
         "@solana/web3.js": "^1.36.0"
     },
     "dependencies": {
-        "@bastion-multisig/solana-wallet": "^2.0.4",
+        "@bastion-multisig/solana-wallet": "^2.0.5",
         "@solana/wallet-adapter-base": "^0.9.4",
         "@walletconnect/client": "2.0.0-beta.26",
         "@walletconnect/legacy-modal": "2.0.0-beta.26",
