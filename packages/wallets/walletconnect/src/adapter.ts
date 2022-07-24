@@ -15,7 +15,6 @@ import {
 } from '@solana/wallet-adapter-base';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import WalletConnectClient, { CLIENT_EVENTS } from '@walletconnect/client';
-import QRCodeModal from '@walletconnect/qrcode-modal';
 import { ClientOptions, ClientTypes, PairingTypes, SessionTypes } from '@walletconnect/types';
 import {
     deserialiseTransaction,
@@ -24,7 +23,8 @@ import {
     serializeAllTransactions,
     SolanaSignAllTransactions,
     SolanaSignTransaction,
-} from 'solana-wallet';
+} from '@bastion-multisig/solana-wallet';
+import QRCodeModal from '@walletconnect/legacy-modal';
 import base58 from 'bs58';
 import { ERROR } from '@walletconnect/utils';
 
@@ -44,7 +44,7 @@ export interface WalletConnectWalletAdapterConfig {
     params?: ClientTypes.ConnectParams;
 }
 
-export const WalletConnectWalletName = 'WalletConnect' as WalletName;
+export const WalletConnectWalletName = 'Bastion' as WalletName;
 
 export class WalletConnectWalletAdapter extends BaseSignerWalletAdapter {
     name = WalletConnectWalletName;
