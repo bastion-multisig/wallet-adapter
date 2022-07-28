@@ -194,7 +194,7 @@ export class WalletConnectWalletAdapter extends BaseSignerWalletAdapter {
             try {
                 await client.disconnect({
                     topic: this._session!.topic,
-                    reason: ERROR.USER_DISCONNECTED.format(),
+                    reason: 'User disconnected' as any,
                 });
             } catch (error: any) {
                 this.emit('error', new WalletDisconnectionError(error?.message, error));
